@@ -1,0 +1,19 @@
+{
+  "name": "basic-auth-server",
+  "version": "1.0.0",
+  "description": "A basic authentication server for demonstartion purposes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomkovicsb/basic-auth-server.git"
+  },
+  "author": "Balazs Tomkovics",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomkovicsb/basic-auth-server/issues"
+  },
+  "homepage": "https://github.com/tomkovicsb/basic-auth-server#readme"
+}
