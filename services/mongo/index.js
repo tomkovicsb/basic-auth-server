@@ -6,7 +6,7 @@ const mongoConfig = config.db.mongo;
 
 module.exports = {
   init: async () => {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       if (!!mongoConfig.debug) {
         mongoose.set('debug', console.log);
       }
@@ -19,10 +19,10 @@ module.exports = {
         .on('error', err => {
           console.error(err);
         })
-        .on('disconnected', ()=> {
+        .on('disconnected', () => {
           console.error('Disconnected from DB');
         })
-        .once('open', function () {
+        .once('open', () => {
           console.log(`Connection to Mongoose was successful! Connected to database: ${mongoose.connection.name}`);
           // Try to load the mongoose models
           try {
