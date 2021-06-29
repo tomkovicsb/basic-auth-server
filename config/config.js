@@ -9,8 +9,15 @@ module.exports = {
       opt: {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        mongos: process.env.MONGODB_MONGOS === 'true' ? true : false
-      }
-    }
-  }
+        mongos: process.env.MONGODB_MONGOS === 'true' ? true : false,
+      },
+    },
+  },
+  cache: {
+    redis: {
+      enabled: process.env.REDIS_ENABLED === 'true' ? true : false,
+      port: process.env.REDIS_PORT,
+      host: process.env.REDIS_HOST,
+    },
+  },
 };
