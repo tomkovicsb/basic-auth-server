@@ -1,12 +1,18 @@
 const express = require('express');
-const dotenv = require('dotenv');
 
 require('dotenv').config()
 
 const config = require('./config');
+const mongo = require('./services/mongo');
+
 const port = config.server.port;
 const server = express();
 
-server.listen(port);
+const initServer = async () => {
+  await mongo.init();
 
-console.log(`Auth server started on port ${port}`);
+  server.listen(port);
+  console.log(`Auth server started on port ${port}`);
+};
+
+initServer();
