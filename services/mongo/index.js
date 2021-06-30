@@ -54,4 +54,8 @@ module.exports = {
   },
 
   mongoose: mongoose,
+
+  get(modelName) {
+    return mongoose.model(modelName);
+  }
 };
