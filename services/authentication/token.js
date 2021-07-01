@@ -1,8 +1,12 @@
-const config = require('../../config');
-const mongo = require('../mongo');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
+const {
+  auth: authConfig,
+  oidc: oidcConfig,
+  server: serverConfig,
+} = require('../../config');
+const mongo = require('../mongo');
 
-const authConfig = config.auth;
 const RefreshToken = mongo.get('RefreshToken');
 const AuthCode = mongo.get('AuthCode');
 
@@ -12,8 +16,55 @@ const {
   InvalidAuthCodeException,
 } = require('../error');
 
+const claimsFromUser= function (user) {
+  return {
+    sub: user._id,
+    iss: serverConfig.host,
+    auth_time: moment().unix(),
+    name: name,
+    firstName: _.get(user, 'firstName') || '',
+    lastName: _.get(user, 'lastName') || '',
+    nickname:  _.get(user, 'nickname') || '',
+    updated_at: moment(user.updatedAt).unix(),
+    email: _.get(user, 'email'),
+  };
+};
+
+const idTokenData = (params) => {
+ const {user, scope, claims} = params;
+  const userInfo = {};
+  const supportedClaims = oidcConfig.claims;
+  const scopeRelatedClaims = oidcConfig.mappedScopeRelatedClaims;
+
+  let neededClaims = [];
+  // Get the scope mapped claims from config
+  scope.forEach(function (oneScope) {
+    if (scopeRelatedClaims[oneScope]) {
+      neededClaims = neededClaims.concat(scopeRelatedClaims[oneScope]);
+    }
+  });
+  // Add the extra claims requested
+  neededClaims = neededClaims.concat(claims);
+
+  //Sort out duplicates and remove not supported claims
+  neededClaims = _.uniq(neededClaims);
+  neededClaims = _.intersection(neededClaims, supportedClaims);
+
+  const claimedData = claimsFromUser(user);
+
+  neededClaims.forEach(function (oneClaim) {
+    userInfo[oneClaim] = claimedData[oneClaim];
+  });
+
+  return userInfo;
+};
+
 module.exports = {
-  createAccessToken(user, refreshToken) {
+  createAccessToken(params) {
+    const {
+      user,
+      refreshToken,
+    } = params;
     return jwt.sign({
         userId: user._id.toString(),
         nickname: user.nickname,
@@ -63,8 +114,28 @@ module.exports = {
       throw new InvalidRefreshTokenException();
     }
   },
-  createIdToken() {
-    //TODO: Finish id token creation
+  createIdToken(params) {
+    const {
+      user,
+      scope,
+      claims,
+      jwk,
+      clientId,
+    } = params;
+
+    let payload = idTokenData({user, scope, claims});
+
+    // These attributes are must be present in id tokens.
+    payload.aud = clientId; // audience
+    payload.iat = moment().unix(); // issued at
+
+    return jwt.sign(payload, authConfig.oidc.secret, {
+      expiresIn: authConfig.jwt.expire / 1000,
+      header: {
+        kid: jwk.kid
+      },
+      algorithm: 'RS256'
+    });
   },
   createAuthCode: async (user) => {
     return await AuthCode.create({

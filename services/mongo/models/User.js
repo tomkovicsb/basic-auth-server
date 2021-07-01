@@ -19,6 +19,8 @@ const schema = new Schema({
     enum: _.keys(ACCOUNT_STATUSES),
     default: ACCOUNT_STATUSES.ACTIVE
   },
+}, {
+  timestamps: true
 });
 
 schema.index({ email: 1 });

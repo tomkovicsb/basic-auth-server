@@ -1,6 +1,42 @@
+const _ = require('lodash');
+
+const scopes = {
+  OPEN_ID: 'openid',
+  PROFILE: 'profile',
+  EMAIL: 'email',
+};
+
+const claims = {
+  SUB: 'sub',
+  ISS: 'iss',
+  AUTH_TIME: 'auth_time',
+  LAST_NAME: 'lastName',
+  FIRST_NAME: 'firstName',
+  NICKNAME: 'nickname',
+  EMAIL: 'email',
+};
+
+const mappedScopeRelatedClaims = {};
+
+mappedScopeRelatedClaims[scopes.OPEN_ID] = [
+  claims.SUB,
+  claims.ISS,
+  claims.AUTH_TIME,
+];
+
+mappedScopeRelatedClaims[scopes.PROFILE] = [
+  claims.NICKNAME,
+  claims.LAST_NAME,
+  claims.FIRST_NAME,
+];
+mappedScopeRelatedClaims[scopes.EMAIL] = [
+  claims.EMAIL,
+];
+
 module.exports = {
   server: {
     port: process.env.SERVER_PORT || 3000,
+    host: process.env.SERVER_HOST || 'localhost',
   },
   db: {
     mongo: {
@@ -34,5 +70,11 @@ module.exports = {
     authCode: {
       expire: process.env.AUTH_CODE_EXPIRE || 2 * 60 * 1000,
     },
+  },
+  oidc: {
+    secret: process.env.OIDC_SECRET || 'oidcsecret',
+    availableScopes: _.values(scopes),
+    availableClaims: _.values(claims),
+    mappedScopeRelatedClaims: mappedScopeRelatedClaims
   },
 };
