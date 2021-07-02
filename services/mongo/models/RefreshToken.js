@@ -6,6 +6,7 @@ const ObjectId = Schema.ObjectId;
 
 const schema = new Schema({
   userId: { type: ObjectId, ref: 'User' },
+  token: { type: String, default: uuid },
   jti: { type: String, default: uuid },
   expireAt: { type: Date, expires: 0 }
 }, {

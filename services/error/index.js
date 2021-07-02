@@ -54,6 +54,14 @@ class InvalidAuthCodeException extends Error {
   }
 }
 
+class MissingParamsException extends Error {
+  constructor(paramsString) {
+    const message = `Missing params: ${paramsString}`;
+    const code = 1007;
+    super(message, code);
+  }
+}
+
 module.exports = {
   AccountAlreadyExistsException,
   AccountNotFoundException,
@@ -62,4 +70,5 @@ module.exports = {
   InvalidAccessTokenException,
   InvalidRefreshTokenException,
   InvalidAuthCodeException,
+  MissingParamsException,
 };

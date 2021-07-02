@@ -1,4 +1,4 @@
 module.exports = {
-  email: require('./email'),
-  token: require('./token'),
+  emailAuth: require('./emailAuth'),
+  tokenHandler: require('./tokenHandler'),
 };

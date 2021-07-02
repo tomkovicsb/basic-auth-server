@@ -47,7 +47,7 @@ module.exports = {
 
     const passwordMatch = await bcrypt.compare(user.password, dbUser.password);
 
-    if (passwordMatch) {
+    if (!passwordMatch) {
       throw new PasswordMismatchException();
     }
 
