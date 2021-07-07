@@ -29,7 +29,7 @@ module.exports = class Response {
 
   error(error) {
     this.template.isSuccess = false;
-
+    console.error(`Response error: ${error}`);
     switch (typeof error) {
       case 'object':
         if (error.message) {

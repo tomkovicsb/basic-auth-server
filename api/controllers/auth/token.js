@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       response.data({
         refreshToken: refreshToken.token,
         accessToken: accessToken,
-        user: User.toResponse(user)
+        user: User.toResponse(user),
       });
     } else if (query.refreshToken) {
       let refreshToken = await tokenHandler.validateRefreshToken(query.refreshToken);

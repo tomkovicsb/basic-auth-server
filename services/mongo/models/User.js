@@ -46,6 +46,15 @@ schema.statics.toResponse = user => {
   return responseData;
 };
 
+schema.statics.toPublicProfile = user => {
+  const responseData = {
+    userId: user._id.toString(),
+    nickname: user.nickname,
+  };
+
+  return responseData;
+};
+
 const model = mongoose.model('User', schema, 'users');
 
 module.exports = model;
