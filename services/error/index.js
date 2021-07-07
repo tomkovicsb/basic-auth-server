@@ -1,4 +1,14 @@
-class AccountAlreadyExistsException extends Error {
+const util = require('util');
+
+function CustomError (message, code) {
+  Error.captureStackTrace(this, this.constructor);
+  this.code = code;
+  this.message = `${message} (${code})`;
+}
+
+util.inherits(CustomError, Error);
+
+class AccountAlreadyExistsException extends CustomError {
   constructor() {
     const message = 'Account already exists';
     const code = 1000;
@@ -6,7 +16,7 @@ class AccountAlreadyExistsException extends Error {
   }
 }
 
-class AccountNotFoundException extends Error {
+class AccountNotFoundException extends CustomError {
   constructor() {
     const message = 'Account not found';
     const code = 1001;
@@ -14,7 +24,7 @@ class AccountNotFoundException extends Error {
   }
 }
 
-class PasswordMismatchException extends Error {
+class PasswordMismatchException extends CustomError {
   constructor() {
     const message = 'Password mismatch';
     const code = 1002;
@@ -22,7 +32,7 @@ class PasswordMismatchException extends Error {
   }
 }
 
-class PasswordMalformedException extends Error {
+class PasswordMalformedException extends CustomError {
   constructor() {
     const message = 'Password is not strong enough';
     const code = 1003;
@@ -30,7 +40,7 @@ class PasswordMalformedException extends Error {
   }
 }
 
-class InvalidAccessTokenException extends Error {
+class InvalidAccessTokenException extends CustomError {
   constructor() {
     const message = 'Invalid access token';
     const code = 1004;
@@ -38,7 +48,7 @@ class InvalidAccessTokenException extends Error {
   }
 }
 
-class InvalidRefreshTokenException extends Error {
+class InvalidRefreshTokenException extends CustomError {
   constructor() {
     const message = 'Invalid refresh token';
     const code = 1005;
@@ -46,7 +56,7 @@ class InvalidRefreshTokenException extends Error {
   }
 }
 
-class InvalidAuthCodeException extends Error {
+class InvalidAuthCodeException extends CustomError {
   constructor() {
     const message = 'Invalid auth code';
     const code = 1006;
@@ -54,10 +64,34 @@ class InvalidAuthCodeException extends Error {
   }
 }
 
-class MissingParamsException extends Error {
+class MissingParamsException extends CustomError {
   constructor(paramsString) {
     const message = `Missing params: ${paramsString}`;
     const code = 1007;
+    super(message, code);
+  }
+}
+
+class MissingAuthException extends CustomError {
+  constructor() {
+    const message = `Missing auth`;
+    const code = 1008;
+    super(message, code);
+  }
+}
+
+class InvalidAuthException extends CustomError {
+  constructor() {
+    const message = `Invalid Auth`;
+    const code = 1009;
+    super(message, code);
+  }
+}
+
+class InvalidObjectIdException extends CustomError {
+  constructor() {
+    const message = `Invalid ObjectId`;
+    const code = 1010;
     super(message, code);
   }
 }
@@ -71,4 +105,7 @@ module.exports = {
   InvalidRefreshTokenException,
   InvalidAuthCodeException,
   MissingParamsException,
+  MissingAuthException,
+  InvalidAuthException,
+  InvalidObjectIdException,
 };
