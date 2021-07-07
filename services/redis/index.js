@@ -9,7 +9,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       if (!redisConfig.enabled) {
         console.log('Redis is not enabled');
-        resolve();
+        return resolve();
       }
 
       client = redis.createClient(redisConfig.port, redisConfig.host);

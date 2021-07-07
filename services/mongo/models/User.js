@@ -26,7 +26,7 @@ const schema = new Schema({
 schema.index({ email: 1 });
 schema.index({ nickname: 1 });
 
-schema.statics.ACCOUNT_STAUSES = ACCOUNT_STATUSES;
+schema.statics.ACCOUNT_STATUSES = ACCOUNT_STATUSES;
 
 schema.statics.checkPasswordStrength = password => {
   let regexp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&.-]{8,}$/;
@@ -36,6 +36,7 @@ schema.statics.checkPasswordStrength = password => {
 
 schema.statics.toResponse = user => {
   const responseData = {
+    userId: user._id.toString(),
     email: user.email,
     nickname: user.nickname,
     firstName: user.firstName,

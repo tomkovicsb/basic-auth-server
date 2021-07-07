@@ -1,4 +1,4 @@
-const { emailAuth } = require('../../../services/authentication');
+const { emailAuth, tokenHandler } = require('../../../services/authentication');
 const Response = require('../../../services/response');
 
 const { MissingParamsException } = require('../../../services/error');
@@ -13,12 +13,15 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const user = await emailAuth.loginUser(body);
+    const authCode = await tokenHandler.createAuthCode(user);
 
+    response.data({
+      code: authCode.code
+    });
   } catch (error) {
     response.error(error);
   }
-
-  await emailAuth.registerUser(body);
 
   return response.send();
 };

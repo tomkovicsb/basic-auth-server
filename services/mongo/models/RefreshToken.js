@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid-v4');
-const _ = require('lodash');
 const { Schema } = mongoose;
 const ObjectId = Schema.ObjectId;
 

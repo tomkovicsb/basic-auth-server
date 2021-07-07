@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    await emailAuth.loginUser(body);
+    await emailAuth.registerUser(body);
   } catch (error) {
     response.error(error);
   }
