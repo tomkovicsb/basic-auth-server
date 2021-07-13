@@ -32,6 +32,10 @@ module.exports = {
 
   set(key, data) {
     return new Promise((resolve, reject) => {
+      if (!redisConfig.enabled) {
+        return resolve();
+      }
+
       client.set(key, data, function(err, redisResponse) {
         if (err) {
           return reject(err);
@@ -44,7 +48,27 @@ module.exports = {
 
   get(key) {
     return new Promise((resolve, reject) => {
+      if (!redisConfig.enabled) {
+        return resolve();
+      }
+
       client.get(key, function(err, redisResponse) {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(redisResponse);
+      });
+    });
+  },
+
+  del(key) {
+    return new Promise((resolve, reject) => {
+      if (!redisConfig.enabled) {
+        return resolve();
+      }
+
+      client.del(key, function(err, redisResponse) {
         if (err) {
           return reject(err);
         }
