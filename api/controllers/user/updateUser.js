@@ -1,6 +1,9 @@
 const Response = require('../../../services/response');
+const userCache = require('../../../services/userCache');
+const config = require('../../../config');
 const mongo = require('../../../services/mongo');
 const User = mongo.get('User');
+const cacheConfig = config.cache;
 
 module.exports = async (req, res) => {
     const { user, body } = req;
@@ -10,6 +13,14 @@ module.exports = async (req, res) => {
     }, body, {
         new: true
     }).lean();
+
+    await userCache.clear({
+        id: user.userId
+    });
+    await userCache.clear({
+        id: user.userId,
+        key: cacheConfig.keys.userProfile
+    });
 
     response.data(User.toResponse(updatedUserData));
 

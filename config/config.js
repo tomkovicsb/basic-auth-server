@@ -55,6 +55,10 @@ module.exports = {
       port: process.env.REDIS_PORT,
       host: process.env.REDIS_HOST,
     },
+    keys: {
+      user: 'user',
+      userProfile: 'user:profile',
+    }
   },
   password: {
     salt: process.env.PASSWORD_SALT || 5,
