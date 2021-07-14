@@ -24,9 +24,9 @@ const initServer = async () => {
   server.listen(port);
   console.log(`Auth server started on port ${port}`);
 
-  if (process.env.NODE_ENV === 'test') {
-    server.emit('listened', null);
-  }
+  server.emit('listened', null);
 };
 
 initServer().catch(console.error);
+
+module.exports = server;

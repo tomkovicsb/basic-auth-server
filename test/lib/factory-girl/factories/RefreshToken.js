@@ -1,5 +1,5 @@
 const factory = require('../factory');
-const RefreshToken = require('../../../../../services/mongo/models/RefreshToken');
+const RefreshToken = require('../../../../services/mongo/models/RefreshToken');
 
 const { chance, assoc } = factory;
 

@@ -1,5 +1,5 @@
 const factory = require('../factory');
-const AuthCode = require('../../../../../services/mongo/models/AuthCode');
+const AuthCode = require('../../../../services/mongo/models/AuthCode');
 
 const { chance, assoc } = factory;
 

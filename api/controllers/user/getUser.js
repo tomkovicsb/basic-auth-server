@@ -6,7 +6,7 @@ const User = mongo.get('User');
 module.exports = async (req, res) => {
     const { user } = req;
     const response = new Response(res);
-    let userData = await user.findById(user.userId).lean();
+    let userData = await User.findById(user.userId).lean();
 
     userData = User.toResponse(userData);
 

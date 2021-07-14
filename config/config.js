@@ -46,6 +46,7 @@ module.exports = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         mongos: process.env.MONGODB_MONGOS === 'true' ? true : false,
+        useFindAndModify: false,
       },
     },
   },

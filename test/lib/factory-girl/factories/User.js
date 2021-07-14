@@ -1,5 +1,5 @@
 const factory = require('../factory');
-const User = require('../../../../../services/mongo/models/User');
+const User = require('../../../../services/mongo/models/User');
 
 const { chance } = factory;
 
