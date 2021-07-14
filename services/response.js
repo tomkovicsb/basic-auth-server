@@ -2,6 +2,10 @@
 
 const _ = require('lodash');
 
+/**
+ * This class transforms the server http responses into a standardized format
+ * */
+
 module.exports = class Response {
   constructor(res) {
     this.response = res;
