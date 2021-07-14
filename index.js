@@ -23,6 +23,10 @@ const initServer = async () => {
   server.use(require('./api/routes'));
   server.listen(port);
   console.log(`Auth server started on port ${port}`);
+
+  server.emit('listened', null);
 };
 
 initServer().catch(console.error);
+
+module.exports = server;

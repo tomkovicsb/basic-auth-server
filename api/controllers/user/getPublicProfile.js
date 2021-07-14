@@ -26,6 +26,5 @@ module.exports = async (req, res) => {
         key: cacheConfig.keys.userProfile,
         data: userData
     });
-
     return response.send();
 };

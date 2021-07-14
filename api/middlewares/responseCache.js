@@ -21,7 +21,7 @@ module.exports = (type) => {
 	return async (req, res, next) => {
 		const response = new Response(res);
 
-		if (!cache || !!cacheConfig.redis.enabled) {
+		if (!cache || !cacheConfig.redis.enabled) {
 			return next();
 		}
 
@@ -35,7 +35,7 @@ module.exports = (type) => {
 			id = req.body[param];
 		}
 
-		const data = cache.get({
+		const data = await cache.get({
 			id,
 			key
 		});
