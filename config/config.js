@@ -59,6 +59,10 @@ module.exports = {
     keys: {
       user: 'user',
       userProfile: 'user:profile',
+      blacklistedToken: 'blacklisted:token',
+    },
+    ttl: {
+      blacklistedToken: 60 * 60
     }
   },
   password: {
@@ -67,7 +71,7 @@ module.exports = {
   auth: {
     jwt: {
       secret: process.env.JWT_SECRET || 'tokensecret',
-      expire: process.env.JWT_EXPIRE || 60 * 60 * 24 * 1000,
+      expire: process.env.JWT_EXPIRE || 60 * 60 * 1000,
     },
     refreshToken: {
       expire: process.env.REFRESH_TOKEN_EXPIRE || 3 * 30 * 24 * 60 * 60 * 1000,

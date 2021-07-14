@@ -3,8 +3,10 @@ const {
   auth: authConfig,
 } = require('../../config');
 const mongo = require('../mongo');
+const blacklistedTokensCache = require('../blacklistedTokensCache');
 
 const RefreshToken = mongo.get('RefreshToken');
+const BlacklistedToken = mongo.get('BlacklistedToken');
 const AuthCode = mongo.get('AuthCode');
 
 const {
@@ -74,6 +76,18 @@ module.exports = {
     }
 
     return currentToken;
+  },
+  invalidateRefreshToken: async ({params}) => {
+    const { jti } = params;
+    await RefreshToken.remove({ jti });
+    const blacklistedToken = await BlacklistedToken.create({
+      jti: jti,
+      expireAt: Date.now() + authConfig.refreshToken.expire
+    });
+    await blacklistedTokensCache.set({
+      jti,
+      data: blacklistedToken
+    });
   },
   createAuthCode: async (user) => {
     return await AuthCode.create({

@@ -1,5 +1,6 @@
 const Response = require('../../services/response');
 const { tokenHandler } = require('../../services/authentication');
+const blacklistedTokensCache = require('../../services/blacklistedTokensCache');
 
 const {
     MissingAuthException,
@@ -22,6 +23,12 @@ module.exports = (req, res, next) => {
 
             try {
                 const tokenData = tokenHandler.validateAccessToken(token);
+                const bannedToken = blacklistedTokensCache.get({ jti: tokenData.jti });
+
+                if (bannedToken) {
+                    response.error(new InvalidAuthException());
+                    return response.send();
+                }
 
                 req.user = tokenData;
                 return next();

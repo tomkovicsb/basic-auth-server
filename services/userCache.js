@@ -7,7 +7,7 @@ const cacheConfig = config.cache;
  * */
 
 module.exports = {
-	get: async ({id, key}) => {
+	get: async ({id, key, ttl}) => {
 		const redisUser = await redis.get(`${key || cacheConfig.keys.user}:${id}`);
 
 		if (!redisUser) {
@@ -17,7 +17,7 @@ module.exports = {
 		return JSON.parse(redisUser);
 	},
 	set: async ({id, key, data}) => {
-		return await redis.set(`${ key || cacheConfig.keys.user} :${id}`, JSON.stringify(data));
+		return await redis.set(`${ key || cacheConfig.keys.user}:${id}`, JSON.stringify(data));
 	},
 	clear: async ({id, key}) => {
 		return await redis.del(`${ key || cacheConfig.keys.user }:${id}`);
