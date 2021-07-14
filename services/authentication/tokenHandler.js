@@ -13,6 +13,13 @@ const {
   InvalidAuthCodeException,
 } = require('../error');
 
+/**
+ * Token handler
+ *
+ * This service handles the different authentication tokens.
+ * Creates and validates auth codes, access tokens and refresh tokens.
+ * */
+
 module.exports = {
   createAccessToken(params) {
     const {

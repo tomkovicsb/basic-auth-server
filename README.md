@@ -11,6 +11,11 @@ It uses NodeJS, MongoDB and optionally Redis.
 
 Node version manager (nvm) is advised for smooth context switches.
 
+### Prepared commands
+- npm run server - Starts the server on localhost
+- npm run test - Runs the API unit tests
+- Npm run doc - Generates the API docs. It will be in the docs folder.
+
 ## Environment variables
 - NODE_ENV - The environment of the server. Default is 'local'. The contents of config depend from this.
 - SERVER_PORT - The port which the server will listen on.

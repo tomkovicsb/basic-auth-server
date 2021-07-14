@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "AuthAPI",
+      "script": "index.js",
+      "exec_mode": "fork",
+      "max_memory_restart": "500M"
+    }
+  ]
+}

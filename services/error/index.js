@@ -1,5 +1,9 @@
 const util = require('util');
 
+/**
+ * This file contains the common errors used in server responses.
+ * */
+
 function CustomError (message, code) {
   Error.captureStackTrace(this, this.constructor);
   this.code = code;

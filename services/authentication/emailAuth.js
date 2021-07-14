@@ -11,6 +11,14 @@ const {
   PasswordMalformedException,
 } = require('../error');
 
+/**
+ * Email Authentication
+ *
+ * This service handles the email and password based
+ * authentication steps. User registration, password check
+ * and user login are handled in this file.
+ * */
+
 module.exports = {
   registerUser: async (user) => {
     const registeredUser = await User.findOne({ email: user.email }).lean();
