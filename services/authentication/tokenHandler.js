@@ -77,7 +77,7 @@ module.exports = {
 
     return currentToken;
   },
-  invalidateRefreshToken: async ({params}) => {
+  invalidateRefreshToken: async (params) => {
     const { jti } = params;
     await RefreshToken.remove({ jti });
     const blacklistedToken = await BlacklistedToken.create({

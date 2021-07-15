@@ -7,7 +7,7 @@ const {
     InvalidAuthException,
 } = require('../../services/error');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     const response = new Response(res);
 
     if (req.headers && req.headers.authorization) {
@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
 
             try {
                 const tokenData = tokenHandler.validateAccessToken(token);
-                const bannedToken = blacklistedTokensCache.get({ jti: tokenData.jti });
+                const bannedToken = await blacklistedTokensCache.get({ jti: tokenData.jti });
 
                 if (bannedToken) {
                     response.error(new InvalidAuthException());
