@@ -76,5 +76,37 @@ module.exports = {
         resolve(redisResponse);
       });
     });
+  },
+
+  expire(key, ttl) {
+    return new Promise((resolve, reject) => {
+      if (!redisConfig.enabled) {
+        return resolve();
+      }
+
+      client.expire(key, ttl, function(err, redisResponse) {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(redisResponse);
+      });
+    });
+  },
+
+  ttl(key) {
+    return new Promise((resolve, reject) => {
+      if (!redisConfig.enabled) {
+        return resolve();
+      }
+
+      client.ttl(key, function(err, redisResponse) {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(redisResponse);
+      });
+    });
   }
 };

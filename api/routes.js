@@ -12,6 +12,7 @@ const router = express.Router();
 router.post('/auth/login', authController.login);
 router.post('/auth/register', authController.register);
 router.get('/auth/token', authController.token);
+router.post('/auth/logout', [isAuthenticated], authController.logout);
 
 router.get('/user', [isAuthenticated, responseCache('userCache')], userController.getUser);
 router.get('/user/:userId', [isObjectId(['userId']), responseCache('profileCache')], userController.getPublicProfile);
